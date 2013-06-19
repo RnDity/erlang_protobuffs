@@ -2,7 +2,17 @@
 %% -*- erlang -*-
 %%! -sasl errlog_type error -boot start_sasl -noshell
 
+fix_ebin_path() ->
+  EbinPath = filename:join([filename:dirname(escript:script_name()),
+                           "..", "ebin"]),
+  case filelib:is_dir(EbinPath) of
+      true ->
+          code:add_pathz(EbinPath);
+      false -> ok
+  end.
+
 main ([File]) ->
+  fix_ebin_path(),
   protobuffs_compile:generate_source (File);
 main (_) ->
   io:format ("usage: ~s <protofile>~n",
