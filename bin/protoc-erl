@@ -7,7 +7,7 @@ fix_ebin_path() ->
                            "..", "ebin"]),
   case filelib:is_dir(EbinPath) of
       true ->
-          code:add_pathz(EbinPath);
+          code:add_patha(EbinPath);
       false -> ok
   end.
 
