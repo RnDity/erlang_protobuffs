@@ -13,7 +13,8 @@ fix_ebin_path() ->
 
 main ([File]) ->
   fix_ebin_path(),
-  protobuffs_compile:generate_source (File);
+  protobuffs_compile:generate_source (File,
+                                      [{imports_dir, [filename:dirname(File)]}]);
 main (_) ->
   io:format ("usage: ~s <protofile>~n",
              [filename:basename (escript:script_name())]),
