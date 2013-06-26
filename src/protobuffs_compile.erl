@@ -707,7 +707,7 @@ resolve_list_name(Name, _Package) when is_tuple(hd(Name)) ->
 resolve_list_name(Name, undefined) when is_integer(hd(Name)) ->
     [[Name]];
 resolve_list_name(Name, Package) when is_integer(hd(Name)) ->
-    [[Name], [Name, Package]].
+    [[Name | lists:reverse(string:tokens(Package, "."))]].
 
 %% @hidden
 resolve_types(Data, Enums) -> resolve_types (Data, Data, Enums, []).
