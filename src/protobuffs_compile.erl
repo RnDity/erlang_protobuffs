@@ -114,7 +114,8 @@ parse_imports([{import, File} = Head | Tail], Path, Acc) ->
 	    file:close(F),
 	    {ok,String} = parse_file(Fullname),
 	    {ok,FirstParsed} = parse_string(String),
-	    Parsed = lists:append(FirstParsed, [file_boundary | Tail]),
+        Parsed = lists:append(proplists:delete(import, FirstParsed),
+            [file_boundary | Tail]),
 	    parse_imports(Parsed, Path, [Head | Acc]);
 	{error, Error} ->
 	    error_logger:error_report([
